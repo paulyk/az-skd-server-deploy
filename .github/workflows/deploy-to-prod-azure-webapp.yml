@@ -28,12 +28,12 @@ jobs:
       - name: Publish
         run: dotnet publish SKD.Server/SKD.Server.csproj -c Release --output ${{ env.DOTNET_ROOT }}        
 
-      # - name: Webapp Deploy
-      #   uses: azure/webapps-deploy@v2
-      #   with:
-      #       app-name: ${{ env.AZURE_WEBAPP_NAME }}
-      #       package: ${{ env.AZURE_WEBPP_PACKAGE_PATH }}
-      #       publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE }}
+      - name: Webapp Deploy
+        uses: azure/webapps-deploy@v2
+        with:
+            app-name: ${{ env.AZURE_WEBAPP_NAME }}
+            package: ${{ env.AZURE_WEBPP_PACKAGE_PATH }}
+            publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE }}
 
 
             
