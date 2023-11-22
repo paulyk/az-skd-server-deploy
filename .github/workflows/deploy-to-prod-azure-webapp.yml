@@ -7,7 +7,7 @@ on:
   workflow_dispatch:
 
 env:
-  AZURE_WEBAPP_NAME: "skd-server-prod"
+  AZURE_WEBAPP_NAME: "skd-server-test-deploy"
   AZURE_WEBPP_PACKAGE_PATH: "."
 
 jobs:
@@ -28,11 +28,13 @@ jobs:
       - name: Publish
         run: dotnet publish SKD.Server/SKD.Server.csproj -c Release --output ${{ env.DOTNET_ROOT }}        
 
-      - name: Webapp Deploy
-        uses: azure/webapps-deploy@v2
-        with:
-            app-name: ${{ env.AZURE_WEBAPP_NAME }}
-            package: ${{ env.AZURE_WEBPP_PACKAGE_PATH }}
-            publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_67AED5D19F7B410FBC82A57B9A3AAD4C }}
+      # - name: Webapp Deploy
+      #   uses: azure/webapps-deploy@v2
+      #   with:
+      #       app-name: ${{ env.AZURE_WEBAPP_NAME }}
+      #       package: ${{ env.AZURE_WEBPP_PACKAGE_PATH }}
+      #       publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE }}
+
+
             
 
