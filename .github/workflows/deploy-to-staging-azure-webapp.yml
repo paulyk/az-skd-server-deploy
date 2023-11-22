@@ -1,0 +1,38 @@
+name: Build and deploy ASP.Net Core app to Azure Web App - skd-server-prod
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+env:
+  AZURE_WEBAPP_NAME: "skd-server-staging"
+  AZURE_WEBPP_PACKAGE_PATH: "."
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Set up .NET Core
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: '8.0.x' 
+
+      - name: Build with dotnet
+        run: dotnet build --configuration Release
+
+      - name: Publish
+        run: dotnet publish SKD.Server/SKD.Server.csproj -c Release --output ${{ env.DOTNET_ROOT }}        
+
+      - name: Webapp Deploy
+        uses: azure/webapps-deploy@v2
+        with:
+            app-name: ${{ env.AZURE_WEBAPP_NAME }}
+            package: ${{ env.AZURE_WEBPP_PACKAGE_PATH }}
+            publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_67AED5D19F7B410FBC82A57B9A3AAD4C }}
+            
+
